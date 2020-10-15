@@ -1,10 +1,8 @@
 import React, {Component} from "react";
-import AuthenticationService from "./AuthenticationService";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from 'react-router-dom'
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import LoginComponent from "./LoginComponent";
