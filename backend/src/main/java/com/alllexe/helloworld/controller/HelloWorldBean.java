@@ -1,4 +1,4 @@
-package com.alllexe.todo.controller;
+package com.alllexe.helloworld.controller;
 
 public class HelloWorldBean {
     private String message;

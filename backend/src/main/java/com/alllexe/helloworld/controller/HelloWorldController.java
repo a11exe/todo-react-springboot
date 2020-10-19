@@ -1,4 +1,4 @@
-package com.alllexe.todo.controller;
+package com.alllexe.helloworld.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

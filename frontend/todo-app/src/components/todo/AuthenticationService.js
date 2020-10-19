@@ -10,6 +10,10 @@ class AuthenticationService {
     isUserLoggedIn() {
         return sessionStorage.getItem('authenticatedUser') != null;
     }
+
+    getLoggedInUserName() {
+        return sessionStorage.getItem('authenticatedUser');
+    }
 }
 
 export default new AuthenticationService()

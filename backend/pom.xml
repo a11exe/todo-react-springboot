@@ -12,7 +12,7 @@
 	<artifactId>todo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todo</name>
-	<description>Todo app</description>
+	<description>TodoComponent app</description>
 
 	<properties>
 		<java.version>11</java.version>
