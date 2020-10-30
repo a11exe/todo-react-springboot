@@ -1,9 +1,115 @@
-import React, {Component} from "react";
+import React, {Component} from 'react'
+import moment from 'moment'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import TodoService from "../../api/todo/TodoService";
+import AuthenticationService from "./AuthenticationService";
 
 class TodoComponent extends Component {
-    render() {
-        return <div>Todo component {this.props.match.params.id} </div>
 
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            id : this.props.match.params.id,
+            description : 'Learn Forms Now',
+            targetDate : moment(new Date()).format('YYYY-MM-DD')
+        }
+
+        this.onSubmit = this.onSubmit.bind(this)
+        this.validate = this.validate.bind(this)
+
+    }
+
+    componentDidMount() {
+        let username = AuthenticationService.getLoggedInUserName()
+        if (this.state.id !== 0) {
+            TodoService.retrieveTodo(username, this.state.id)
+                .then(response => this.setState({
+                    description: response.data.description,
+                    targetDate: moment(response.data.targetDate).format('YYYY-MM-DD'),
+                }))
+        }
+    }
+
+    validate(values) {
+        let errors = {}
+        if(!values.description) {
+            errors.description = 'Enter a Description'
+        } else if(values.description.length<5) {
+            errors.description = 'Enter atleast 5 Characters in Description'
+        }
+
+        if(!moment(values.targetDate).isValid()) {
+            errors.targetDate = 'Enter a valid Target Date'
+        }
+        return errors
+
+    }
+
+    onSubmit(values) {
+        let username = AuthenticationService.getLoggedInUserName()
+        if (this.state.id === 0) {
+            TodoService.addTodo(username, this.state.id, {
+                id: this.state.id,
+                username: username,
+                description: values.description,
+                targetDate: values.targetDate
+            }).then(
+                () => this.props.history.push(`/todos`)
+            )
+        } else {
+            TodoService.updateTodo(username, this.state.id, {
+                id: this.state.id,
+                username: username,
+                description: values.description,
+                targetDate: values.targetDate
+            }).then(
+                () => this.props.history.push(`/todos`)
+            )
+        }
+    }
+
+    render() {
+
+        let {description,targetDate} = this.state
+        //let targetDate = this.state.targetDate
+
+        return (
+            <div>
+                <h1>Todo</h1>
+                <div className="container">
+                    <Formik
+                        initialValues={{description,targetDate}}
+                        onSubmit={this.onSubmit}
+                        validateOnChange={false}
+                        validateOnBlur={false}
+                        validate={this.validate}
+                        enableReinitialize={true}
+                    >
+                        {
+                            (props) => (
+                                <Form>
+                                    <ErrorMessage name="description" component="div"
+                                                  className="alert alert-warning"/>
+                                    <ErrorMessage name="targetDate" component="div"
+                                                  className="alert alert-warning"/>
+                                    <fieldset className="form-group">
+                                        <label>Description</label>
+                                        <Field className="form-control" type="text" name="description"/>
+                                    </fieldset>
+                                    <fieldset className="form-group">
+                                        <label>Target Date</label>
+                                        <Field className="form-control" type="date" name="targetDate"/>
+                                    </fieldset>
+                                    <button className="btn btn-success" type="submit">Save</button>
+                                </Form>
+                            )
+                        }
+                    </Formik>
+
+                </div>
+            </div>
+        )
     }
 }
 

@@ -9,4 +9,5 @@ class HelloWorldService {
         return axios.get(`http://localhost:8080/hello-world-bean/${name}`);
     }
 }
+
 export default new HelloWorldService()
