@@ -1,4 +1,4 @@
-package com.alllexe.helloworld.controller;
+package com.alllexe.todo.model;
 
 public class HelloWorldBean {
     private String message;
@@ -18,7 +18,7 @@ public class HelloWorldBean {
     @Override
     public String toString() {
         return "HelloWorldBean{" +
-                "                            name='" + message +
+                "name='" + message +
         '}';
     }
 }

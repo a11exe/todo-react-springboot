@@ -17,6 +17,8 @@ public class TodoHardcodedService implements TodoService {
             new Todo(3, "alabra", "Learn about Angular", new Date(), false)
     }).collect(Collectors.toList());
 
+    private int count = 4;
+
     @Override
     public List<Todo> findAllByUsername(String username) {
         return todos.stream()
@@ -35,5 +37,24 @@ public class TodoHardcodedService implements TodoService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Todo findAllByUsernameAndId(String username, long id) {
+        return todos.stream()
+                .filter(t -> (id == t.getId()) && username.equals(t.getUsername()))
+                .findAny().orElseThrow(TodoNotFoundException::new);
+    }
+
+    @Override
+    public Todo save(Todo todo) {
+        if (todo.getId() == 0) {
+            todo.setId(count++);
+            todos.add(todo);
+        } else {
+            delete(todo.getUsername(), todo.getId());
+            todos.add(todo);
+        }
+        return todo;
     }
 }
