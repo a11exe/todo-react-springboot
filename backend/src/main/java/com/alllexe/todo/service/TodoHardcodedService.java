@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 public class TodoHardcodedService implements TodoService {
 
     private final List<Todo> todos = Arrays.stream( new Todo[]{
-            new Todo(1, "alabra", "Learn to Dance 2", new Date(), false),
-            new Todo(2, "alabra", "Learn about Microservices 2", new Date(), false),
-            new Todo(3, "alabra", "Learn about Angular", new Date(), false)
+            new Todo(1, "alabra", "Learn to Dance 2 H", new Date(), false),
+            new Todo(2, "alabra", "Learn about Microservices 2 H", new Date(), false),
+            new Todo(3, "alabra", "Learn about Angular H", new Date(), false)
     }).collect(Collectors.toList());
 
-    private int count = 4;
+    private long count = 4;
 
     @Override
     public List<Todo> findAllByUsername(String username) {
