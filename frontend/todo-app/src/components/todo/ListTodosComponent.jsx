@@ -60,7 +60,8 @@ class ListTodosComponent extends Component {
     }
 
     addTodo() {
-        this.props.history.push(`/todos/0`);
+        console.log("!!! Add todo !!!")
+        this.props.history.push(`/todos/-1`);
     }
 
     render() {

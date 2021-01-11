@@ -48,7 +48,10 @@ class TodoComponent extends Component {
 
     onSubmit(values) {
         let username = AuthenticationService.getLoggedInUserName()
-        if (this.state.id === 0) {
+        console.log("ADD or UPDATE ")
+        console.log(this.state.id)
+        if (this.state.id === '-1') {
+            console.log("add todo")
             TodoService.addTodo(username, this.state.id, {
                 id: this.state.id,
                 username: username,
@@ -58,6 +61,8 @@ class TodoComponent extends Component {
                 () => this.props.history.push(`/todos`)
             )
         } else {
+            console.log("edit todo")
+
             TodoService.updateTodo(username, this.state.id, {
                 id: this.state.id,
                 username: username,
